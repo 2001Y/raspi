@@ -1,4 +1,4 @@
-import './globals.css'
+import './globals.scss'
 
 import styles from './page.module.css'
 import Clock from "./client/Clock"
@@ -16,9 +16,11 @@ export default function RootLayout({
       */}
       <head />
       <body>
-        <div className={styles.clock}>
-          <Clock />
-        </div>
+        <section>
+          <div className="clock">
+            <Clock />
+          </div>
+        </section>
         {children}
       </body>
     </html>
