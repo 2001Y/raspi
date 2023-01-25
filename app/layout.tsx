@@ -11,7 +11,7 @@ export default function RootLayout({
 }) {
 
   return (
-    <html lang="en">
+    <html lang="ja">
       <Reload />
       {/*
         <head /> will contain the components returned by the nearest parent
