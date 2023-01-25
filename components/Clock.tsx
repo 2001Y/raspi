@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 
-export default function gitSync() {
+export default function Clock() {
 
     const [state_date, setState_Date] = useState(new Date());
 

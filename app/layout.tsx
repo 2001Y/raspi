@@ -1,8 +1,7 @@
 import './globals.scss'
 
-import styles from './page.module.css'
-import Clock from "./client/Clock"
-import Reload from "./client/Reload"
+import Clock from "../components/Clock"
+import Reload from "../components/Reload"
 
 export default function RootLayout({
   children,

@@ -1,12 +1,13 @@
 import { unstable_getServerSession } from "next-auth/next"
-import { authOptions } from "pages/api/auth/[...nextauth]"
-import { SignIn, SignOut } from "app/client/authButton"
+import { authOptions } from "../pages/api/auth/[...nextauth]"
+import { SignIn, SignOut } from "../components/AuthBotton"
 
-export default async function () {
+export default async function GTask() {
 
     const session = await unstable_getServerSession(authOptions);
+    let data = [];
 
-    if (session) {
+    if (session && session.user && session.user.accessToken) {
 
         let accessToken = session.user.accessToken;
 
@@ -20,8 +21,7 @@ export default async function () {
                     'Content-Type': 'application/json'
                 },
             }
-        )
-            .then((response) => response.json());
+        ).then((response) => response.json());
 
         // 最初のリストを選択
         let listId = lists.items[0].id;
@@ -35,33 +35,30 @@ export default async function () {
                     'Content-Type': 'application/json'
                 },
             }
-        )
-            .then((response) => response.json());
+        ).then((response) => response.json());
 
-        let data = list.items;
+        data = list.items;
+        data.sort((a: any, b: any) => a.position - b.position);
 
+    }
 
-        data.sort((a, b) => a.position - b.position);
-        // data = data.filter(a => a.status == 'needsAction')
-        // console.log(data)
-
-        return (
-            <>
-                <ul>
-                    {session && data.map((e, i) => (
+    return (
+        <>
+            {session ? (
+                <>
+                    {data.map((e: any, i: number) => (
                         <li key={i}>
                             {e.title}
                         </li>
                     ))}
-                </ul>
-            </>
-        )
-    } else {
-        return (
-            <>
-                <SignIn />
-            </>
-        )
-    }
+                </>
+            ) : (
+                <>
+                    <h1>ログインしろ</h1>
+                    <SignIn />
+                </>
+            )}
+        </>
+    )
 
 }

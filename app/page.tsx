@@ -1,9 +1,11 @@
-import GTask from "./client/GTask"
+import GTask from "../components/GTask"
 export default async function Home() {
 
   return (
     <main>
-      <GTask></GTask>
+      {/** @ts-expect-error */}
+      <GTask />
     </main>
   )
+
 }

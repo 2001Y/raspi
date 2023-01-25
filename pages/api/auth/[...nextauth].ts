@@ -24,20 +24,30 @@ export const authOptions: NextAuthOptions = {
                     ...token,
                     accessToken: account.access_token,
                     refreshToken: account.refresh_token,
-                    userName: account.providerAccountId,
-                    accessTokenExpires: account.expires_at * 1000
+                    // accessTokenExpires: account.expires_at * 1000
+                }
+            } else {
+                return {
+                    ...token
+                    // accessTokenExpires: account.expires_at * 1000
                 }
             }
 
-            if (Date.now() < token.accessTokenExpires) {
-                return token
-            }
+            // if (Date.now() < token.accessTokenExpires) {
+            //     return token
+            // }
 
-            return await refreshAccessToken(token)
+            // return await refreshAccessToken(token)
         },
         async session({ session, token }) {
-            session.user.accessToken = token.accessToken
-            session.user.refreshToken = token.refreshToken
+            if (session && token) {
+                return {
+                    ...session,
+                    accessToken: token.accessToken,
+                    refreshToken: token.refreshToken,
+                    // accessTokenExpires: account.expires_at * 1000
+                }
+            }
             return session
         },
 
