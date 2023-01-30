@@ -1,7 +1,10 @@
 import { unstable_getServerSession } from "next-auth/next"
 import { authOptions } from "../pages/api/auth/[...nextauth]"
 
-export default async function GTask({ accessToken }) {
+type Prop = {
+    accessToken: string
+}
+export default async function GTask({ accessToken }: Prop) {
 
     // const session = await unstable_getServerSession(authOptions);
 

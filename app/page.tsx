@@ -7,7 +7,7 @@ import { SignIn, SignOut } from "../components/AuthBotton"
 export default async function Home() {
 
   const session = await unstable_getServerSession(authOptions);
-  let accessToken = session?.user.accessToken;
+  const accessToken: string = session?.user.accessToken || "";
 
   return (
     <main>
