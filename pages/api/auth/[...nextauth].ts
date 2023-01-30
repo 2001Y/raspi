@@ -18,38 +18,53 @@ export const authOptions: NextAuthOptions = {
     ],
     session: { strategy: "jwt" },
     callbacks: {
-        async jwt({ token, account, user }) {
-            if (account && user) {
-                return {
-                    ...token,
-                    accessToken: account.access_token,
-                    refreshToken: account.refresh_token,
-                    // accessTokenExpires: account.expires_at * 1000
-                }
-            } else {
-                return {
-                    ...token
-                    // accessTokenExpires: account.expires_at * 1000
-                }
+        async jwt({ token, account }) {
+            if (account) {
+                token.accessToken = account.access_token
             }
-
-            // if (Date.now() < token.accessTokenExpires) {
-            //     return token
-            // }
-
-            // return await refreshAccessToken(token)
+            console.log(account)
+            return token
         },
         async session({ session, token }) {
-            if (session && token) {
-                return {
-                    ...session,
-                    accessToken: token.accessToken,
-                    refreshToken: token.refreshToken,
-                    // accessTokenExpires: account.expires_at * 1000
-                }
-            }
-            return session
+            session.user.accessToken = token.accessToken;
+            return session;
         },
+
+        // async jwt({ token, account, user }) {
+
+        //     console.log(token)
+
+        //     if (account) {
+        //         token.accessToken = token.access_token
+        //     }
+
+        //     // token.user.accessToken = token.accessToken,
+
+        //     return token
+        //     // if (Date.now() < token.accessTokenExpires) {
+        //     //     return token
+        //     // }
+
+        //     // return await refreshAccessToken(token)
+        // },
+        // async session({ session, token }) {
+
+        //     console.log(token)
+
+        //     session.user.accessToken = token.accessToken
+
+        //     // if (session && token) {
+        //     //     return {
+        //     //         user: {
+        //     //             ...session,
+        //     //             accessToken: token.accessToken,
+        //     //             refreshToken: token.refreshToken,
+        //     //             // accessTokenExpires: account.expires_at * 1000
+        //     //         }
+        //     //     }
+        //     // }
+        //     return session
+        // },
 
     }
 }
