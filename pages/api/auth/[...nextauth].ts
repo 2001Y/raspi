@@ -1,4 +1,5 @@
-import NextAuth, { NextAuthOptions } from "next-auth"
+import NextAuth from 'next-auth'
+import type { NextAuthOptions } from 'next-auth'
 import GoogleProvider from "next-auth/providers/google";
 
 // For more information on each option (and a full list of options) go to
@@ -21,12 +22,17 @@ export const authOptions: NextAuthOptions = {
         async jwt({ token, account }) {
             if (account) {
                 token.accessToken = account.access_token
+                token.refreshToken = account.refresh_token
+                // token.expires = Date.now() + account.expires_in * 1000,
             }
-            console.log(account)
+            // console.log(account)
             return token
         },
         async session({ session, token }) {
             session.user.accessToken = token.accessToken as string;
+            session.user.refreshToken = token.refreshToken as string;
+            // console.log(token.refreshToken)
+            // session.user.accessTokenExpires= account.expires_at * 1000
             return session;
         },
 

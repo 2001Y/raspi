@@ -1,3 +1,4 @@
+// "use client"
 import { unstable_getServerSession } from "next-auth/next"
 import { authOptions } from "../pages/api/auth/[...nextauth]"
 
@@ -20,7 +21,10 @@ export default async function GTask({ accessToken }: Prop) {
                 'Content-Type': 'application/json'
             },
         }
-    ).then((response) => response.json());
+    ).then((response) => response.json())
+        .catch((error) => {
+            console.error(error);
+        });
 
     // 最初のリストを選択
     let listId = lists.items[0].id;
@@ -41,7 +45,7 @@ export default async function GTask({ accessToken }: Prop) {
 
     return (
         <ul>
-            {data.map((e: any, i: number) => (
+            {data.length != 0 && data.map((e: any, i: number) => (
                 <li key={i}>
                     {e.title}
                 </li>
