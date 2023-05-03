@@ -1,11 +1,8 @@
 "use client"
-import React, { useState, useEffect } from "react";
 
-type Prop = {
-    accessToken: string;
-};
+import { useState, useEffect } from "react";
 
-export default function GTask({ accessToken }: Prop) {
+export default function GTask({ accessToken }) {
     // ローディング、エラー、データの状態
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -65,8 +62,9 @@ export default function GTask({ accessToken }: Prop) {
     if (data)
         return (
             <ul>
-                {data.length != 0 &&
-                    data.map((e: any, i: number) => <li key={i}>{e.title}</li>)}
+                {data.length != 0 && data.map((e, i) => (
+                    <li key={i}>{e.title}</li>
+                ))}
             </ul>
         );
     return null;
